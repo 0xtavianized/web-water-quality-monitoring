@@ -53,12 +53,11 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        
+        document.addEventListener("DOMContentLoaded", function () {        
             const apiUrl = "https://api.thingspeak.com/channels/2725512/feeds.json?results=1";
             const loadingElement = document.getElementById("loading");
             const dataContainer = document.getElementById("data-container");
-        
+
             function getStatus(value, type) {
                 value = parseFloat(value);
             
@@ -79,7 +78,7 @@
                         return { color: 'text-gray-500', description: 'Data tidak valid!', level: 'unknown' };
                 }
             }
-        
+
             function calculateOverallStatus(statuses) {
                 const levels = statuses.map(status => status.level);
             
@@ -94,7 +93,7 @@
             
                 return { text: 'Normal', color: 'text-green-500' };
             }
-        
+
             async function fetchData() {
                 try {
                     loadingElement.classList.remove("hidden");
@@ -146,7 +145,7 @@
                     dataContainer.classList.remove("hidden");
                 }
             }
-        
+
             setInterval(fetchData, 15000);
             fetchData();
         });
