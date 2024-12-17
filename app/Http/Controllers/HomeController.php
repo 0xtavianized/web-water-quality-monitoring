@@ -18,12 +18,10 @@ class HomeController extends Controller
             $turbidity = isset($data['feeds'][0]['field2']) ? (float) $data['feeds'][0]['field2'] : null;
             $tds = isset($data['feeds'][0]['field3']) ? (float) $data['feeds'][0]['field3'] : null;
 
-            // Format untuk tampilan
             $phFormatted = isset($ph) ? number_format($ph, 2, ',', '') : null;
             $turbidityFormatted = isset($turbidity) ? number_format($turbidity, 2, ',', '') : null;
             $tdsFormatted = isset($tds) ? number_format($tds, 2, ',', '') : null;
 
-            // Proses logika dengan tipe float asli
             $phStatus = $this->getPhStatus($ph);
             $turbidityStatus = $this->getTurbidityStatus($turbidity);
             $tdsStatus = $this->getTdsStatus($tds);
@@ -60,9 +58,9 @@ class HomeController extends Controller
         if ($ph === null) {
             return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
         }
-        if ($ph < 5.5) {
+        if ($ph < 6.5) {
             return ['description' => 'Air Asam', 'color' => 'text-red-500'];
-        } elseif ($ph >= 5.5 && $ph <= 9) {
+        } elseif ($ph >= 6.5 && $ph <= 9) {
             return ['description' => 'Normal', 'color' => 'text-green-500'];
         } else {
             return ['description' => 'Air Basa', 'color' => 'text-blue-500'];
@@ -75,9 +73,9 @@ class HomeController extends Controller
             return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
         }
 
-        if ($turbidity < 20) {
+        if ($turbidity < 50) {
             return ['description' => 'Normal', 'color' => 'text-green-500'];
-        } elseif ($turbidity < 35) {
+        } elseif ($turbidity < 75) {
             return ['description' => 'Agak Keruh', 'color' => 'text-yellow-500'];
         } else {
             return ['description' => 'Keruh', 'color' => 'text-red-500'];
@@ -91,7 +89,7 @@ class HomeController extends Controller
         }
         if ($tds < 500) {
             return ['description' => 'Normal', 'color' => 'text-green-500'];
-        } elseif ($tds <= 1000) {
+        } elseif ($tds <= 750) {
             return ['description' => 'Agak Konduktif', 'color' => 'text-yellow-500'];
         } else {
             return ['description' => 'Sangat Konduktif', 'color' => 'text-red-500'];
