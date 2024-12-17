@@ -38,16 +38,14 @@
       </div>
     </div>
 
-    <!-- Data Container -->
     <div class="w-full h-screen flex justify-center items-center flex-col text-center" id="data-container">
-        
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="ph">            
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="ph">
         </div>
 
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="turbidity">            
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="turbidity">
         </div>
 
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="tds">           
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="tds">
         </div>
 
         <div class="mt-10 text-4xl font-bold" id="status">
@@ -56,13 +54,31 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+
         const apiUrl = "https://api.thingspeak.com/channels/2725512/feeds.json?results=1";
         const loadingElement = document.getElementById("loading");
         const dataContainer = document.getElementById("data-container");
 
+        function getStatus(value, type) {
+            value = parseFloat(value); 
+
+            switch (type) {
+                case 'ph':
+                    if (value >= 6.5 && value <= 8.5) return { color: 'text-green-500', description: 'Normal' };
+                    else return { color: 'text-red-500', description: 'Tidak Normal' };
+                case 'turbidity':
+                    if (value < 5) return { color: 'text-green-500', description: 'Jernih' };
+                    else return { color: 'text-yellow-500', description: 'Keruh' };
+                case 'tds':
+                    if (value <= 500) return { color: 'text-green-500', description: 'Baik' };
+                    else return { color: 'text-red-500', description: 'Buruk' };
+                default:
+                    return { color: 'text-gray-500', description: 'Data tidak valid' };
+            }
+        }
+
         async function fetchData() {
             try {
-                loadingElement.classList.add("visible");
                 loadingElement.classList.remove("hidden");
                 dataContainer.classList.add("hidden");
 
@@ -73,33 +89,39 @@
                 const turbidity = data.feeds[0]?.field2 || "N/A";
                 const tds = data.feeds[0]?.field3 || "N/A";
 
+                const phStatus = getStatus(ph, 'ph');
+                const turbidityStatus = getStatus(turbidity, 'turbidity');
+                const tdsStatus = getStatus(tds, 'tds');
+
                 document.getElementById("ph").innerHTML = `
-                    <div class="text-4xl mb-1 font-bold w-full text-blue-500">
+                    <div class="text-4xl mb-1 font-bold ${phStatus.color}">
                         pH (Keasaman): ${ph}
-                        <span class="text-xl mt-2 block">Normal</span>
+                        <span class="text-xl mt-2 block">${phStatus.description}</span>
                     </div>
                 `;
+
                 document.getElementById("turbidity").innerHTML = `
-                    <div class="text-4xl mb-1 font-bold w-full text-green-500">
+                    <div class="text-4xl mb-1 font-bold ${turbidityStatus.color}">
                         Kekeruhan: ${turbidity} NTU
-                        <span class="text-xl mt-2 block">Normal</span>
+                        <span class="text-xl mt-2 block">${turbidityStatus.description}</span>
                     </div>
                 `;
+
                 document.getElementById("tds").innerHTML = `
-                    <div class="text-4xl mb-1 font-bold w-full text-yellow-500">
+                    <div class="text-4xl mb-1 font-bold ${tdsStatus.color}">
                         Konduktifitas: ${tds} ppm
-                        <span class="text-xl mt-2 block">Warning</span>
+                        <span class="text-xl mt-2 block">${tdsStatus.description}</span>
                     </div>
                 `;
+
                 document.getElementById("status").innerHTML = `
-                    Status: <span class="text-green-500">Normal</span>
+                    Status: <span class="text-green-500">Data Terupdate</span>
                 `;
 
             } catch (error) {
                 console.error("Error fetching data:", error);
-                dataContainer.innerHTML = <p>Error fetching data. Please try again later.</p>;
+                dataContainer.innerHTML = `<p class="text-red-500">Error fetching data. Please try again later.</p>`;
             } finally {
-                loadingElement.classList.remove("visible");
                 loadingElement.classList.add("hidden");
                 dataContainer.classList.remove("hidden");
             }
@@ -107,7 +129,7 @@
 
         setInterval(fetchData, 15000);
         fetchData();
-      });
+    });
     </script>
 </body>
 </html>
