@@ -73,9 +73,9 @@ class HomeController extends Controller
             return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
         }
 
-        if ($turbidity < 50) {
+        if ($turbidity < 20) {
             return ['description' => 'Normal', 'color' => 'text-green-500'];
-        } elseif ($turbidity < 75) {
+        } elseif ($turbidity < 35) {
             return ['description' => 'Agak Keruh', 'color' => 'text-yellow-500'];
         } else {
             return ['description' => 'Keruh', 'color' => 'text-red-500'];
