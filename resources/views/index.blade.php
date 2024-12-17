@@ -53,104 +53,103 @@
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-const apiUrl = "https://api.thingspeak.com/channels/2725512/feeds.json?results=1";
-const loadingElement = document.getElementById("loading");
-const dataContainer = document.getElementById("data-container");
-
-function getStatus(value, type) {
-    value = parseFloat(value);
-
-    switch (type) {
-        case 'ph':
-            if (value >= 6.5 && value <= 8.5) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
-            else if (value < 6.5 ) return { color: 'text-red-500', description: 'Air Asam', level: 'danger' };
-            else if (value > 8.5) return { color: 'text-red-500', description: 'Air Basa', level: 'danger' };
-        case 'turbidity':
-            if (value < 25) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
-            else if (value < 35) return { color: 'text-yellow-500', description: 'Agak Keruh', level: 'warning' };
-            else return { color: 'text-yellow-500', description: 'Sangat Keruh', level: 'warning' };
-        case 'tds':
-            if (value <= 300) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
-            else if (value < 500) return { color: 'text-red-500', description: 'Agak Konduktif', level: 'danger' };
-            else return { color: 'text-red-500', description: 'Sangat Konduktif', level: 'danger' };
-        default:
-            return { color: 'text-gray-500', description: 'Data tidak valid!', level: 'unknown' };
-    }
-}
-
-function calculateOverallStatus(statuses) {
-    const levels = statuses.map(status => status.level);
-
-    const dangerCount = levels.filter(level => level === 'danger').length;
-    const warningCount = levels.filter(level => level === 'warning').length;
-    const normalCount = levels.filter(level => level === 'normal').length;
-
-    if (dangerCount >= 1 && warningCount >= 1) return { text: 'Bahaya', color: 'text-red-500' };
-    if (dangerCount >= 1 && normalCount >= 1) return { text: 'Warning', color: 'text-yellow-500' };
-    if (warningCount >= 2) return { text: 'Warning', color: 'text-yellow-500' };
-    if (warningCount === 1 && normalCount >= 2) return { text: 'Normal', color: 'text-green-500' };
-
-    return { text: 'Normal', color: 'text-green-500' };
-}
-
-async function fetchData() {
-    try {
-        loadingElement.classList.remove("hidden");
-        dataContainer.classList.add("hidden");
-
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        const ph = data.feeds[0]?.field1 || "N/A";
-        const turbidity = data.feeds[0]?.field2 || "N/A";
-        const tds = data.feeds[0]?.field3 || "N/A";
-
-        const phStatus = getStatus(ph, 'ph');
-        const turbidityStatus = getStatus(turbidity, 'turbidity');
-        const tdsStatus = getStatus(tds, 'tds');
-
-        const overallStatus = calculateOverallStatus([phStatus, turbidityStatus, tdsStatus]);
-
-        document.getElementById("ph").innerHTML = `
-            <div class="text-4xl mb-1 font-bold ${phStatus.color}">
-                pH (Keasaman): ${ph}
-                <span class="text-xl mt-2 block">${phStatus.description}</span>
-            </div>
-        `;
-
-        document.getElementById("turbidity").innerHTML = `
-            <div class="text-4xl mb-1 font-bold ${turbidityStatus.color}">
-                Kekeruhan: ${turbidity} NTU
-                <span class="text-xl mt-2 block">${turbidityStatus.description}</span>
-            </div>
-        `;
-
-        document.getElementById("tds").innerHTML = `
-            <div class="text-4xl mb-1 font-bold ${tdsStatus.color}">
-                Konduktifitas: ${tds} ppm
-                <span class="text-xl mt-2 block">${tdsStatus.description}</span>
-            </div>
-        `;
-
-        document.getElementById("status").innerHTML = `
-            Status: <span class="${overallStatus.color}">${overallStatus.text}</span>
-        `;
-
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        dataContainer.innerHTML = `<p class="text-red-500">Error fetching data. Please try again later.</p>`;
-    } finally {
-        loadingElement.classList.add("hidden");
-        dataContainer.classList.remove("hidden");
-    }
-}
-
-setInterval(fetchData, 15000);
-fetchData();
-});
-
+        document.addEventListener("DOMContentLoaded", function () {
+        
+            const apiUrl = "https://api.thingspeak.com/channels/2725512/feeds.json?results=1";
+            const loadingElement = document.getElementById("loading");
+            const dataContainer = document.getElementById("data-container");
+        
+            function getStatus(value, type) {
+                value = parseFloat(value);
+            
+                switch (type) {
+                    case 'ph':
+                        if (value >= 6.5 && value <= 8.5) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
+                        else if (value < 6.5 ) return { color: 'text-red-500', description: 'Air Asam', level: 'danger' };
+                        else if (value > 8.5) return { color: 'text-red-500', description: 'Air Basa', level: 'danger' };
+                    case 'turbidity':
+                        if (value < 25) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
+                        else if (value < 35) return { color: 'text-yellow-500', description: 'Agak Keruh', level: 'warning' };
+                        else return { color: 'text-yellow-500', description: 'Sangat Keruh', level: 'warning' };
+                    case 'tds':
+                        if (value <= 300) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
+                        else if (value < 500) return { color: 'text-red-500', description: 'Agak Konduktif', level: 'danger' };
+                        else return { color: 'text-red-500', description: 'Sangat Konduktif', level: 'danger' };
+                    default:
+                        return { color: 'text-gray-500', description: 'Data tidak valid!', level: 'unknown' };
+                }
+            }
+        
+            function calculateOverallStatus(statuses) {
+                const levels = statuses.map(status => status.level);
+            
+                const dangerCount = levels.filter(level => level === 'danger').length;
+                const warningCount = levels.filter(level => level === 'warning').length;
+                const normalCount = levels.filter(level => level === 'normal').length;
+            
+                if (dangerCount >= 1 && warningCount >= 1) return { text: 'Bahaya', color: 'text-red-500' };
+                if (dangerCount >= 1 && normalCount >= 1) return { text: 'Warning', color: 'text-yellow-500' };
+                if (warningCount >= 2) return { text: 'Warning', color: 'text-yellow-500' };
+                if (warningCount === 1 && normalCount >= 2) return { text: 'Normal', color: 'text-green-500' };
+            
+                return { text: 'Normal', color: 'text-green-500' };
+            }
+        
+            async function fetchData() {
+                try {
+                    loadingElement.classList.remove("hidden");
+                    dataContainer.classList.add("hidden");
+                
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                
+                    const ph = data.feeds[0]?.field1 || "N/A";
+                    const turbidity = data.feeds[0]?.field2 || "N/A";
+                    const tds = data.feeds[0]?.field3 || "N/A";
+                
+                    const phStatus = getStatus(ph, 'ph');
+                    const turbidityStatus = getStatus(turbidity, 'turbidity');
+                    const tdsStatus = getStatus(tds, 'tds');
+                
+                    const overallStatus = calculateOverallStatus([phStatus, turbidityStatus, tdsStatus]);
+                
+                    document.getElementById("ph").innerHTML = `
+                        <div class="text-4xl mb-1 font-bold ${phStatus.color}">
+                            pH (Keasaman): ${ph}
+                            <span class="text-xl mt-2 block">${phStatus.description}</span>
+                        </div>
+                    `;
+                    
+                    document.getElementById("turbidity").innerHTML = `
+                        <div class="text-4xl mb-1 font-bold ${turbidityStatus.color}">
+                            Kekeruhan: ${turbidity} NTU
+                            <span class="text-xl mt-2 block">${turbidityStatus.description}</span>
+                        </div>
+                    `;
+                    
+                    document.getElementById("tds").innerHTML = `
+                        <div class="text-4xl mb-1 font-bold ${tdsStatus.color}">
+                            Konduktifitas: ${tds} ppm
+                            <span class="text-xl mt-2 block">${tdsStatus.description}</span>
+                        </div>
+                    `;
+                    
+                    document.getElementById("status").innerHTML = `
+                        Status: <span class="${overallStatus.color}">${overallStatus.text}</span>
+                    `;
+                    
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    dataContainer.innerHTML = `<p class="text-red-500">Error fetching data. Please try again later.</p>`;
+                } finally {
+                    loadingElement.classList.add("hidden");
+                    dataContainer.classList.remove("hidden");
+                }
+            }
+        
+            setInterval(fetchData, 15000);
+            fetchData();
+        });
     </script>
 </body>
 </html>
