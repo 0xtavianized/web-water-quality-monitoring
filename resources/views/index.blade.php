@@ -65,13 +65,16 @@ function getStatus(value, type) {
     switch (type) {
         case 'ph':
             if (value >= 6.5 && value <= 8.5) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
-            else return { color: 'text-red-500', description: 'Tidak Normal', level: 'danger' };
+            else if (value < 6.5 ) return { color: 'text-red-500', description: 'Air Asam', level: 'danger' };
+            else if (value > 8.5) return { color: 'text-red-500', description: 'Air Basa', level: 'danger' };
         case 'turbidity':
-            if (value < 5) return { color: 'text-green-500', description: 'Jernih', level: 'normal' };
-            else return { color: 'text-yellow-500', description: 'Keruh', level: 'warning' };
+            if (value < 25) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
+            else if (value < 35) return { color: 'text-yellow-500', description: 'Agak Keruh', level: 'warning' };
+            else return { color: 'text-yellow-500', description: 'Sangat Keruh', level: 'warning' };
         case 'tds':
-            if (value <= 500) return { color: 'text-green-500', description: 'Baik', level: 'normal' };
-            else return { color: 'text-red-500', description: 'Buruk', level: 'danger' };
+            if (value <= 300) return { color: 'text-green-500', description: 'Normal', level: 'normal' };
+            else if (value < 500) return { color: 'text-red-500', description: 'Agak Konduktif', level: 'danger' };
+            else return { color: 'text-red-500', description: 'Sangat Konduktif', level: 'danger' };
         default:
             return { color: 'text-gray-500', description: 'Data tidak valid', level: 'unknown' };
     }
