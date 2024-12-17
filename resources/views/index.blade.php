@@ -76,7 +76,7 @@ function getStatus(value, type) {
             else if (value < 500) return { color: 'text-red-500', description: 'Agak Konduktif', level: 'danger' };
             else return { color: 'text-red-500', description: 'Sangat Konduktif', level: 'danger' };
         default:
-            return { color: 'text-gray-500', description: 'Data tidak valid', level: 'unknown' };
+            return { color: 'text-gray-500', description: 'Data tidak valid!', level: 'unknown' };
     }
 }
 

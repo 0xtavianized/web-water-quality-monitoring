@@ -22,17 +22,10 @@ class HomeController extends Controller
             $turbidityFormatted = isset($turbidity) ? number_format($turbidity, 2, ',', '') : null;
             $tdsFormatted = isset($tds) ? number_format($tds, 2, ',', '') : null;
 
-            // $phStatus = $this->getPhStatus($ph);
-            // $turbidityStatus = $this->getTurbidityStatus($turbidity);
-            // $tdsStatus = $this->getTdsStatus($tds);
-
             return view('index', [
                 'ph' => $phFormatted,
                 'turbidity' => $turbidityFormatted,
                 'tds' => $tdsFormatted,
-                // 'phStatus' => $phStatus,
-                // 'turbidityStatus' => $turbidityStatus,
-                // 'tdsStatus' => $tdsStatus,
                 'error' => isset($data['feeds']) ? null : 'Error fetching data',
             ]);
         } catch (\Exception $e) {
@@ -40,9 +33,6 @@ class HomeController extends Controller
                 'ph' => null,
                 'turbidity' => null,
                 'tds' => null,
-                // 'phStatus' => null,
-                // 'turbidityStatus' => null,
-                // 'tdsStatus' => null,
                 'error' => $e->getMessage(),
             ]);
         }
@@ -52,47 +42,4 @@ class HomeController extends Controller
     {
         return view('history');
     }
-
-    // private function getPhStatus(?float $ph)
-    // {
-    //     if ($ph === null) {
-    //         return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
-    //     }
-    //     if ($ph < 6.5) {
-    //         return ['description' => 'Air Asam', 'color' => 'text-red-500'];
-    //     } elseif ($ph >= 6.5 && $ph <= 9) {
-    //         return ['description' => 'Normal', 'color' => 'text-green-500'];
-    //     } else {
-    //         return ['description' => 'Air Basa', 'color' => 'text-blue-500'];
-    //     }
-    // }
-
-    // private function getTurbidityStatus(?float $turbidity)
-    // {
-    //     if ($turbidity === null) {
-    //         return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
-    //     }
-
-    //     if ($turbidity < 20) {
-    //         return ['description' => 'Normal', 'color' => 'text-green-500'];
-    //     } elseif ($turbidity < 35) {
-    //         return ['description' => 'Agak Keruh', 'color' => 'text-yellow-500'];
-    //     } else {
-    //         return ['description' => 'Keruh', 'color' => 'text-red-500'];
-    //     }
-    // }
-
-    // private function getTdsStatus(?float $tds)
-    // {
-    //     if ($tds === null) {
-    //         return ['description' => 'Tidak Ada Data', 'color' => 'text-gray-500'];
-    //     }
-    //     if ($tds < 500) {
-    //         return ['description' => 'Normal', 'color' => 'text-green-500'];
-    //     } elseif ($tds <= 750) {
-    //         return ['description' => 'Agak Konduktif', 'color' => 'text-yellow-500'];
-    //     } else {
-    //         return ['description' => 'Sangat Konduktif', 'color' => 'text-red-500'];
-    //     }
-    // }
 }
