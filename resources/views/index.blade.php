@@ -30,50 +30,30 @@
             </div>
         </nav>
     </header>
+
+    <!-- Loading spinner -->
     <div class="fixed inset-0 flex items-center justify-center z-50" id="loading">
       <div class="animate-spin inline-block size-16 border-[6px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
+
+    <!-- Data Container -->
     <div class="w-full h-screen flex justify-center items-center flex-col text-center" id="data-container">
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-            <div class="text-4xl mb-1 font-bold w-full {{ $phStatus['color'] }}" id="ph">
-                pH (Keasaman): {{ $ph }}
-                <span class="text-xl mt-2 block">{{ $phStatus['description'] }}</span>
-            </div>
+        
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="ph">            
         </div>
 
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-          <div class="text-4xl mb-1 font-bold w-full {{ $turbidityStatus['color'] }}" id="turbidity">
-              Kekeruhan: {{ $turbidity }} NTU
-              <span class="text-xl mt-2 block">{{ $turbidityStatus['description'] }}</span>
-          </div>
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="turbidity">            
         </div>
 
-        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-          <div class="text-4xl mb-1 font-bold w-full {{ $tdsStatus['color'] }}" id="tds">
-              Konduktifitas: {{ $tds }} ppm
-              <span class="text-xl mt-2 block">{{ $tdsStatus['description'] }}</span>
-          </div>
+        <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="tds">           
         </div>
 
-        <div class="mt-10 text-4xl font-bold {{ 
-            ($phStatus['color'] === 'text-red-500' || $turbidityStatus['color'] === 'text-red-500' || $tdsStatus['color'] === 'text-red-500') 
-            ? 'text-red-500' 
-            : (($phStatus['color'] === 'text-yellow-500' || $turbidityStatus['color'] === 'text-yellow-500' || $tdsStatus['color'] === 'text-yellow-500') 
-                ? 'text-yellow-500' 
-                : 'text-green-500') 
-        }}">
-            Status:
-            @if ($phStatus['color'] === 'text-red-500' || $turbidityStatus['color'] === 'text-red-500' || $tdsStatus['color'] === 'text-red-500')
-                Bahaya
-            @elseif ($phStatus['color'] === 'text-yellow-500' || $turbidityStatus['color'] === 'text-yellow-500' || $tdsStatus['color'] === 'text-yellow-500')
-                Warning
-            @else
-                Normal
-            @endif
+        <div class="mt-10 text-4xl font-bold" id="status">
         </div>
     </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const apiUrl = "https://api.thingspeak.com/channels/2725512/feeds.json?results=1";
@@ -88,19 +68,46 @@
 
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                
-                console.log(data);
+
+                const ph = data.feeds[0]?.field1 || "N/A";
+                const turbidity = data.feeds[0]?.field2 || "N/A";
+                const tds = data.feeds[0]?.field3 || "N/A";
+
+                document.getElementById("ph").innerHTML = `
+                    <div class="text-4xl mb-1 font-bold w-full text-blue-500">
+                        pH (Keasaman): ${ph}
+                        <span class="text-xl mt-2 block">Normal</span>
+                    </div>
+                `;
+                document.getElementById("turbidity").innerHTML = `
+                    <div class="text-4xl mb-1 font-bold w-full text-green-500">
+                        Kekeruhan: ${turbidity} NTU
+                        <span class="text-xl mt-2 block">Normal</span>
+                    </div>
+                `;
+                document.getElementById("tds").innerHTML = `
+                    <div class="text-4xl mb-1 font-bold w-full text-yellow-500">
+                        Konduktifitas: ${tds} ppm
+                        <span class="text-xl mt-2 block">Warning</span>
+                    </div>
+                `;
+                document.getElementById("status").innerHTML = `
+                    Status: <span class="text-green-500">Normal</span>
+                `;
+
             } catch (error) {
                 console.error("Error fetching data:", error);
+                dataContainer.innerHTML = <p>Error fetching data. Please try again later.</p>;
             } finally {
                 loadingElement.classList.remove("visible");
                 loadingElement.classList.add("hidden");
                 dataContainer.classList.remove("hidden");
             }
         }
+
         setInterval(fetchData, 15000);
         fetchData();
-    });
+      });
     </script>
 </body>
 </html>
