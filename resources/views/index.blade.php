@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
-                <div class="flex flex-col gap-5 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
-                    <a class="font-medium text-blue-500 focus:outline-none dark:text-white" href="{{ url('/') }}" aria-current="page">Home</a>
-                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-500 dark:hover:text-white dark:focus:text-neutral-500" href="{{ url('/history') }}">History</a>
+                <div class="flex flex-col gap-7 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
+                    <a class="font-semibold text-blue-500 focus:outline-none dark:text-white" href="{{ url('/') }}" aria-current="page">Home</a>
+                    <a class="font-semibold text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-500 dark:hover:text-white dark:focus:text-neutral-500" href="{{ url('/history') }}">History</a>
                 </div>
             </div>
         </nav>
