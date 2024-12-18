@@ -25,7 +25,7 @@
             <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
                 <div class="flex flex-col gap-5 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
                     <a class="font-medium text-blue-500 focus:outline-none dark:text-white" href="{{ url('/') }}" aria-current="page">Home</a>
-                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{{ url('/history') }}">History</a>
+                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-300 dark:hover:text-neutral-200 dark:focus:text-neutral-500" href="{{ url('/history') }}">History</a>
                 </div>
             </div>
         </nav>
@@ -48,7 +48,7 @@
         <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="tds">
         </div>
 
-        <div class="mt-10 text-4xl font-bold dark:text-slate-200" id="status">
+        <div class="mt-10 text-4xl font-bold dark:text-white" id="status">
         </div>
     </div>
 

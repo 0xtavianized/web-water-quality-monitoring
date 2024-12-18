@@ -24,7 +24,7 @@
             </div>
             <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
                 <div class="flex flex-col gap-5 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
-                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{{ url('/') }}">Home</a>
+                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-300 dark:hover:text-neutral-200 dark:focus:text-neutral-500" href="{{ url('/') }}">Home</a>
                     <a class="font-medium text-blue-500 focus:outline-none dark:text-white" aria-current="page"
                     >History</a>
                 </div>
@@ -37,17 +37,17 @@
         <div class="flex space-x-3 w-full">
             <div class="sm:flex sm:items-center w-1/2">
                 <label for="startDate" class="block text-sm font-medium dark:text-white">Tanggal Awal : </label>
-                <input type="date" id="startDate" class="max-w-xs py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                <input type="date" id="startDate" class="max-w-xs ml-1 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
             </div>
             <div class="sm:flex sm:items-center w-1/2">
                 <label for="endDate" class="block text-sm font-medium dark:text-white">Tanggal Akhir : </label>
-                <input type="date" id="endDate" class="max-w-xs py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                <input type="date" id="endDate" class="max-w-xs ml-1 py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
             </div>
         </div>
         
         <!-- Button Section -->
         <div class="flex justify-center mt-5">
-            <button id="filterButton" class="px-4 py-2 bg-blue-500 text-white dark:bg-neutral-700 dark:text-white rounded" onclick="pickDate()">Filter</button>
+            <button id="filterButton" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white dark:bg-neutral-700 dark:text-white rounded" onclick="pickDate()">Filter</button>
         </div>
     </div>     
 
