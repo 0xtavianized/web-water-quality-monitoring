@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800 sticky top-0 z-50">
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-900 sticky top-0 z-50">
         <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
             <div class="flex items-center justify-between">
                 <a class="flex-none text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
@@ -23,15 +23,17 @@
                 </div>
             </div>
             <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
-                <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="/">Home</a>
-                    <a class="font-medium text-blue-500 focus:outline-none" aria-current="page" href="/history">History</a>
+                <div class="flex flex-col gap-5 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
+                    <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{{ url('/') }}">Home</a>
+                    <a class="font-medium text-blue-500 focus:outline-none dark:text-white" aria-current="page"
+                    >History</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+    <div class="w-full h-screen dark:bg-neutral-800">
+    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-800">
         <div class="flex space-x-3 w-full">
             <div class="sm:flex sm:items-center w-1/2">
                 <label for="startDate" class="block text-sm font-medium dark:text-white">Tanggal Awal : </label>
@@ -45,11 +47,11 @@
         
         <!-- Button Section -->
         <div class="flex justify-center mt-5">
-            <button id="filterButton" class="px-4 py-2 bg-blue-500 text-white rounded" onclick="pickDate()">Filter</button>
+            <button id="filterButton" class="px-4 py-2 bg-blue-500 text-white dark:bg-neutral-700 dark:text-white rounded" onclick="pickDate()">Filter</button>
         </div>
     </div>     
 
-    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
@@ -73,14 +75,9 @@
         </div>
     </div>
 
-    {{-- <div class="flex justify-center mt-4">
-        <button id="previousButton" class="preline-btn preline-btn-outline text-gray-700 px-4 py-2 mr-2">Previous</button>
-        <div id="pageNumbers" class="flex flex-wrap items-center space-x-2">
-        </div>
-        <button id="nextButton" class="preline-btn preline-btn-outline text-gray-700 px-4 py-2 ml-2">Next</button>
-    </div> --}}
-    <div class="flex flex-col items-center mt-4">
+    <div class="flex flex-col items-center dark:bg-neutral-900">
         <nav id="pagination" class="flex items-center gap-x-1" aria-label="Pagination"></nav>
+    </div>
     </div>
     
 
@@ -257,7 +254,7 @@
 
         function getPageRange(currentPage, totalPages) {
             const range = [];
-            const maxVisiblePages = 5; // Max number of pages to show
+            const maxVisiblePages = 5;
         
             if (totalPages <= maxVisiblePages) {
                 for (let i = 1; i <= totalPages; i++) {

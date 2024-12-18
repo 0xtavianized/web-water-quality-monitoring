@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800 sticky top-0 z-50">
+    <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-900 sticky top-0 z-50">
         <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
             <div class="flex items-center justify-between">
                 <a class="flex-none text-xl font-semibold dark:text-white focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
@@ -24,7 +24,7 @@
             </div>
             <div id="hs-navbar-example" class="hidden hs-collapse overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-example-collapse">
                 <div class="flex flex-col gap-5 mt-5 items-end sm:flex-row sm:items-center sm:mt-0 sm:justify-end sm:ps-5">
-                    <a class="font-medium text-blue-500 focus:outline-none" href="{{ url('/') }}" aria-current="page">Home</a>
+                    <a class="font-medium text-blue-500 focus:outline-none dark:text-white" href="{{ url('/') }}" aria-current="page">Home</a>
                     <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500" href="{{ url('/history') }}">History</a>
                 </div>
             </div>
@@ -32,13 +32,13 @@
     </header>
 
     <!-- Loading spinner -->
-    <div class="fixed inset-0 flex items-center justify-center z-50" id="loading">
-      <div class="animate-spin inline-block size-16 border-[6px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
+    <div class="fixed inset-0 flex items-center justify-center z-50 dark:bg-neutral-800" id="loading">
+      <div class="animate-spin inline-block size-16 border-[6px] border-current border-t-transparent text-blue-600 rounded-full dark:text-white" role="status" aria-label="loading">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
 
-    <div class="w-full h-screen flex justify-center items-center flex-col text-center" id="data-container">
+    <div class="w-full h-screen flex justify-center items-center flex-col text-center dark:bg-neutral-800" id="data-container">
         <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="ph">
         </div>
 
@@ -48,7 +48,7 @@
         <div class="flex flex-col mb-5 bg-white border-2 border-black shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400" id="tds">
         </div>
 
-        <div class="mt-10 text-4xl font-bold" id="status">
+        <div class="mt-10 text-4xl font-bold dark:text-slate-200" id="status">
         </div>
     </div>
 
